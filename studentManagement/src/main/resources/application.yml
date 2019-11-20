@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://ITC-QMS:1433;databasename=TEST_HZ
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: itcqms
+    
+    
+mybatis:
+  type-aliases-package: com.inventec.studentManagement.Pojo
+  mapper-locations: classpath:static/mapper/*.xml
+  configuration:    map-underscore-to-camel-case: true
