@@ -32,7 +32,7 @@ public class ScoreController {
 		
 		List<StudentScore> list = scoreService.selectStudentScores(student_sno);
 		
-		return list.size() != 0 ? new JsonResult(1,list) : new JsonResult(0,"fail");
+		return list.size() != 0 ? new JsonResult(1,list) : new JsonResult(0,"查询失败");
 	}
 	
 	
@@ -41,7 +41,9 @@ public class ScoreController {
 	 */
 	@GetMapping("/{student_sno}/{subject_cno}")
 	public JsonResult select(@PathVariable("student_sno") String student_sno,@PathVariable("subject_cno") String subject_cno) {
-		return new JsonResult(1,scoreService.selectStudentScore(student_sno, subject_cno));
+		StudentScore studentScore = new StudentScore();
+		studentScore = scoreService.selectStudentScore(student_sno, subject_cno);
+		return studentScore != null ? new JsonResult(1,studentScore) : new JsonResult(0,"查询失败");
 	}
 	
 	/*
@@ -51,7 +53,7 @@ public class ScoreController {
 	public JsonResult addStudentScore(@PathVariable("student_sno") String student_sno,@RequestBody Score score) {
 		score.setScore(student_sno);
 		int count = scoreService.addStudentScore(score);
-		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
+		return count == 1? new JsonResult(1,"添加成功") : new JsonResult(0,"添加失败");
 	}
 	
 	
@@ -62,7 +64,7 @@ public class ScoreController {
 	public JsonResult uodateStudentScore(@PathVariable("student_sno") String student_sno,@RequestBody Score score) {
 		score.setSubject_cno(student_sno);
 		int count = scoreService.updateStudentScore(score);
-		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
+		return count == 1? new JsonResult(1,"修改成功") : new JsonResult(0,"修改失败");
 	}
 	
 	/*
@@ -72,6 +74,6 @@ public class ScoreController {
 	public JsonResult deleteStudent(@PathVariable("student_sno") String student_sno,@RequestBody Score score) {
 		score.setStudent_sno(student_sno);
 		int count = scoreService.deleteStudentScore(score);
-		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
+		return count == 1? new JsonResult(1,"删除成功") : new JsonResult(0,"删除失败");
 	}
 }

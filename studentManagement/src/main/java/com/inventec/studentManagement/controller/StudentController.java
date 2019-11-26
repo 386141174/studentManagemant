@@ -47,7 +47,9 @@ public class StudentController {
 	 */
 	@GetMapping("{student_sno}")
 	public JsonResult selectStudent(@PathVariable("student_sno") String student_sno) {
-		return new JsonResult(1,studentService.selectStudent(student_sno));
+		Student student = studentService.selectStudent(student_sno);
+		
+		return student != null ? new JsonResult(1,student) : new JsonResult(0,"删除失败");
 	}
 	
 //	@GetMapping("stu")
@@ -82,7 +84,7 @@ public class StudentController {
 	@PostMapping
 	public JsonResult addStudent(@RequestBody Student student) {
 		int count = studentService.addStudent(student);
-		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
+		return count == 1? new JsonResult(1,"新增成功") : new JsonResult(0,"新增失败");
 	}
 	
 	
@@ -93,7 +95,7 @@ public class StudentController {
 	@PatchMapping("{student_sno}")
 	public JsonResult updateStudent(@PathVariable("student_sno") String student_sno,@RequestBody Student student) {
 		int count = studentService.updateStudent(student_sno,student);
-		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
+		return count == 1? new JsonResult(1,"修改成功") : new JsonResult(0,"修改失败");
 	}
 	
 	
@@ -103,6 +105,6 @@ public class StudentController {
 	@DeleteMapping("{student_sno}")
 	public JsonResult deleteStudent(@PathVariable("student_sno") String student_sno) {
  		int count = studentService.deleteStudent(student_sno);
- 		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
+ 		return count == 1? new JsonResult(1,"删除成功") : new JsonResult(0,"删除失败");
 	}
 }
