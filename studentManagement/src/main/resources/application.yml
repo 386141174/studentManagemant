@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://ITC-QMS:1433;databasename=TEST_HZ
+    url: jdbc:sqlserver://ITC-QMS:1433;databasename=TEST_LSB
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     username: sa
     password: itcqms
@@ -9,4 +9,8 @@ spring:
 mybatis:
   type-aliases-package: com.inventec.studentManagement.Pojo
   mapper-locations: classpath:static/mapper/*.xml
-  configuration:    map-underscore-to-camel-case: true
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    
+    
+

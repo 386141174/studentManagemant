@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inventec.studentManagement.dao.ScoreDao">
+	
+	<select id="studentScore"  parameterType="StudentScore" resultType="StudentScore">
+		select 
+			S.student_sname,C.score,J.subject_cname,J.subject_cno
+		from 
+			[STUDENT] S left join [STUDENTS_SCORE] C 
+		on 
+			S.student_sno = C.student_sno
+			left join [SUBJECTS] J
+		on 
+			C.subject_cno = J.subject_cno
+		where
+			
+			<trim suffixOverrides="and"></trim>
+			<if test="student_sno != null and student_sno != ''">
+				 S.student_sno = #{student_sno}
+			</if>
+			
+			<if test="subject_cno != null and subject_cno != ''">
+				and J.subject_cno = #{subject_cno}
+			</if>
+			
+	</select>
+	
+	<!-- <resultMap type="StudentScore" id="StudentScore">
+		<association property="student" javaType="Student">
+			<result property="student_sname" column="student_sname"/>
+		</association>
+		<association property="score" javaType="Score">
+			<result property="score" column="score"/>
+		</association>
+		<association property="subject" javaType="Subject">
+			<result property="subject_cname" column="subject_cname"/>
+		</association>
+	</resultMap> -->
+	
+	<insert id="addStudentScore" parameterType="Score">
+		insert into [STUDENTS_SCORE] values(#{student_sno},#{subject_cno},#{score})
+	</insert>
+	
+	
+	<update id="updateStudentScore" parameterType="Score">
+		update [STUDENTS_SCORE] set score = #{score} 
+		where subject_cno = #{subject_cno} and student_sno = #{student_sno}
+	</update>
+		
+	<delete id="deleteStudentScore" parameterType="Score">
+		delete  from [STUDENTS_SCORE] where subject_cno = #{subject_cno} and student_sno = #{student_sno}
+	</delete>
+	
+	<select id="SortStudentScore" parameterType="int">
+		select 
+	</select>
+
+</mapper>

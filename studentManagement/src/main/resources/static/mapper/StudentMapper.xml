@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inventec.studentManagement.dao.StudentDao">
+	
+
+	<select id="selectStudents" resultType="student">
+		select * from dbo.STUDENT 
+	</select>
+	
+	
+	<select id="selectStudent" resultType="student" parameterType="student">
+		select * from dbo.STUDENT 
+		<where>
+			<if test="student_sno != null and student_sno != '' " > student_sno = #{student_sno}</if>
+			<if test="student_sname != null and student_sname != '' "> student_sname = #{student_sname} </if>
+		</where>
+	</select>
+
+	<insert id="addStudent" parameterType="Student">
+		insert into [STUDENT] values(#{student_sno},#{student_sname},#{student_sex},#{student_age},#{student_time})
+	</insert>
+	
+	<update id="updateStudent" parameterType="Student">
+		update [STUDENT] set
+		
+		<trim suffixOverrides=",">
+			<if test="student_sname != null and student_sno != ''">
+				student_sname = #{student_sname},
+			</if>
+			<if test="student_age != null and student_age != ''">
+				student_age = #{student_age},
+			</if>
+			<if test="student_sex != null and student_sex != ''">
+				student_sex = #{student_sex},
+			</if>
+			<if test="student_time != null and student_time != ''">
+				student_time = #{student_time}
+			</if>
+		</trim>
+		
+		where student_sno = #{student_sno}
+		
+	</update>
+	
+	<delete id="deleteStudent" parameterType="String">
+		delete  from [STUDENT] where student_sno = #{student_sno}
+	</delete>
+
+</mapper>
