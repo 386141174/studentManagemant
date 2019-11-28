@@ -134,6 +134,7 @@
 	</select>
 	
 	<resultMap type="Rank" id="studentTotalScoreByStudentSno" >
+			
 			<result property="YW" column="YW"/>
 			<result property="SX" column="SX"/>
 			<result property="YY" column="YY"/>
@@ -146,9 +147,10 @@
 			<result property="XX" column="XX"/>
 		<association property="student" javaType="student">
 			<result property="student_sname" column="student_sname"/>
+			<result property="student_sno" column="student_sno"/>
 		</association>
 		<association property="score" javaType="score">
-			<result property="score" column="score"/>
+			<result property="totalScore" column="score"/>
 		</association>
 		
 	</resultMap>
