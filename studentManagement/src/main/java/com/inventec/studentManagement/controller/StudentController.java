@@ -107,4 +107,5 @@ public class StudentController {
  		int count = studentService.deleteStudent(student_sno);
  		return count == 1? new JsonResult(1,"删除成功") : new JsonResult(0,"删除失败");
 	}
+	
 }

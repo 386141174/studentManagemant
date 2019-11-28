@@ -37,11 +37,7 @@ public class ScoreServiceImp implements ScoreService{
 	@Override
 	public StudentScore selectStudentScore(String student_sno,String subject_cno) {
 		// TODO Auto-generated method stub
-		StudentScore studentScore = new StudentScore();
-		studentScore.setStudent_sno(student_sno);
-		studentScore.setSubject_cno(subject_cno);
-		studentScore = (StudentScore)scoreDao.studentScore(studentScore).get(0);
-		return studentScore;
+		return scoreDao.selectStudentScore(student_sno, subject_cno);
 	}
 	
 	
@@ -74,6 +70,15 @@ public class ScoreServiceImp implements ScoreService{
 		// TODO Auto-generated method stub
 		
 		return scoreDao.deleteStudentScore(score);
+	}
+	
+	
+	
+	@Override
+	public List<Score> selectStudentTotalScore(int topNumber, int sort) {
+		// TODO Auto-generated method stub
+		
+		return scoreDao.selectStudentTotalScore(topNumber, sort);
 	}
 
 }

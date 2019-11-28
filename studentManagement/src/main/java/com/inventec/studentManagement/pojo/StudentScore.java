@@ -10,7 +10,22 @@ public class StudentScore {
 	private String student_sno;
 	private String subject_cno;
 	private String score;
+	private double totalScore;
 	
+	
+	
+
+	public double getTotalScore() {
+		return totalScore;
+	}
+
+
+
+	public void setTotalScore(double totalScore) {
+		this.totalScore = totalScore;
+	}
+
+
 
 	public String getSubject_cname() {
 		return subject_cname;

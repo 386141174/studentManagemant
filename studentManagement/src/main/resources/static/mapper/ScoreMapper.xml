@@ -54,5 +54,119 @@
 	<select id="SortStudentScore" parameterType="int">
 		select 
 	</select>
+	
+	
+	<!-- <select id="selectStudentTotalScore" parameterType="int" resultMap="StudentTotalScore">
+		select
+			top(
+				<if test="topNumber != null and topNumber != ''">
+					#{topNumber}
+				</if>		
+			) 
+			S.student_sno,SUM(C.score) totalScore
+		from 
+			[STUDENT] S left join  [STUDENTS_SCORE] C
+		on
+			S.student_sno = C.student_sno
+		group by
+			S.student_sno
+		order by
+			sum(C.score)
+			<if test="	sort != null and sort == 1">
+				desc
+			</if> 
+	</select>
+	
+	<resultMap type="score" id="StudentTotalScore">
+			<result property="totalScore" column="totalScore"/>
+	</resultMap>
+	
+	
+	<select id="studentTotalScoreByStudentSno" resultType="score" parameterType="list">
+		select 
+			S.student_sno,S.student_sname,C.score 
+		from
+			[STUDENT] S left join [STUDENTS_SCORE] C
+		on 
+			S.student_sno = C.student_sno 
+		where 
+		 	S.student_sno in 
+		 	<foreach collection="list" item="item" separator="," open="(" close=")">
+		 		#{item.student_sno}
+		 	</foreach>
+	</select> -->
+	
+	
+	<select id="selectStudentTotalScore" parameterType="int" resultMap="studentTotalScoreByStudentSno">
+		select 
+			distinct 
+				top(
+					<if test="topNumber != null and topNumber != ''">
+						#{topNumber}
+					</if>	
+					
+					)
+				T.student_sno,S.student_sname,T.YW,T.SX,T.YY,T.WL,T.HX,T.SW,T.LS,T.DL,T.ZZ,T.XX,C.zong score 
+		from 
+			(
+				select 
+					* 
+				from [STUDENTS_SCORE] pivot ( sum(score) for subject_cno in (DL,HX,LS,SW,SX,WL,XX,YW,YY,ZZ) ) as t) as T 
+					left join (
+								select 
+									student_sno,SUM(score) zong 
+								from 
+									[STUDENTS_SCORE] 
+								group by 
+									student_sno
+								) AS C 
+		on 
+			C.student_sno = T.student_sno 
+		left join
+			[STUDENT] S 
+		on
+			S.student_sno = C.student_sno
+		order by 
+			C.zong 
+			<if test="	sort != null and sort == 1">
+				desc
+			</if> 
+	</select>
+	
+	<resultMap type="Rank" id="studentTotalScoreByStudentSno" >
+			<result property="YW" column="YW"/>
+			<result property="SX" column="SX"/>
+			<result property="YY" column="YY"/>
+			<result property="WL" column="WL"/>
+			<result property="HX" column="HX"/>
+			<result property="SW" column="SW"/>
+			<result property="LS" column="LS"/>
+			<result property="DL" column="DL"/>
+			<result property="ZZ" column="ZZ"/>
+			<result property="XX" column="XX"/>
+		<association property="student" javaType="student">
+			<result property="student_sname" column="student_sname"/>
+		</association>
+		<association property="score" javaType="score">
+			<result property="score" column="score"/>
+		</association>
+		
+	</resultMap>
+	
+	<select id="selectStudentScore" parameterType="String" resultType="StudentScore">
+		select 
+			S.student_sno,S.student_sname,C.subject_cno,J.subject_cname
+		from 
+			[STUDENT] S left join [STUDENTS_SCORE] C
+		on
+			S.student_sno = C.student_sno
+		left join
+			[SUBJECTS] J
+		on
+			J.subject_cno = C.subject_cno
+		where 
+			S.student_sno = #{student_sno} and C.subject_cno = #{subject_cno}
+	</select>
+	
 
 </mapper>

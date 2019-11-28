@@ -17,4 +17,5 @@ public interface ScoreService {
 	int addStudentScore(Score score);
 	int updateStudentScore(Score score);
 	int deleteStudentScore(Score score);
+	List<Score> selectStudentTotalScore(int topNumber,int sort);
 }

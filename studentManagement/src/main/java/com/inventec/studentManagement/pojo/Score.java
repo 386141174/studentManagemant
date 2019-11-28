@@ -5,6 +5,14 @@ public class Score {
 	private String student_sno;
 	private String subject_cno;
 	private String score;
+	private double totalScore;
+	
+	public double getTotalScore() {
+		return totalScore;
+	}
+	public void setTotalScore(double totalScore) {
+		this.totalScore = totalScore;
+	}
 	public String getStudent_sno() {
 		return student_sno;
 	}
