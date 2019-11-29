@@ -1,9 +1,14 @@
 package com.inventec.studentManagement.pojo;
 
+import javax.validation.constraints.NotNull;
+
 public class Score {
 	
+	
 	private String student_sno;
+	@NotNull(message = "课程号不能为空")
 	private String subject_cno;
+	@NotNull(message = "分数不能为空")
 	private String score;
 	private double totalScore;
 	

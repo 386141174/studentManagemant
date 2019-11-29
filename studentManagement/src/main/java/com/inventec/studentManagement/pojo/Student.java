@@ -1,11 +1,18 @@
 package com.inventec.studentManagement.pojo;
 
+import javax.validation.constraints.NotNull;
+
 public class Student {
 
+	@NotNull(message = "学号不能为空")
 	private String student_sno;
+	@NotNull(message = "姓名不能为空")
 	private String student_sname;
+	@NotNull(message = "性别不能为空")
 	private int student_sex;
+	@NotNull(message = "年龄不能为空")
 	private int student_age;
+	@NotNull(message = "创建时间不能为空")
 	private String student_time;
 	
 	

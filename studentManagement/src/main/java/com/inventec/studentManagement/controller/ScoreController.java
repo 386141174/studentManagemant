@@ -3,6 +3,7 @@ package com.inventec.studentManagement.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,7 +33,7 @@ public class ScoreController {
 		
 		List<StudentScore> list = scoreService.selectStudentScores(student_sno);
 		
-		return list.size() != 0 ? new JsonResult(1,list) : new JsonResult(0,"查询失败");
+		return list.size() != 0 ? new JsonResult(1,list) : new JsonResult(0,"fail");
 	}
 	
 	
@@ -49,10 +50,10 @@ public class ScoreController {
 	 * 添加学生单科成绩
 	 */
 	@PostMapping("{student_sno}")
-	public JsonResult addStudentScore(@PathVariable("student_sno") String student_sno,@RequestBody Score score) {
+	public JsonResult addStudentScore(@PathVariable("student_sno") String student_sno,@Validated@RequestBody Score score) {
 		score.setStudent_sno(student_sno);
 		int count = scoreService.addStudentScore(score);
-		return count == 1? new JsonResult(1,"添加成功") : new JsonResult(0,"添加失败");
+		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
 	}
 	
 	
@@ -63,7 +64,7 @@ public class ScoreController {
 	public JsonResult uodateStudentScore(@PathVariable("student_sno") String student_sno,@RequestBody Score score) {
 		score.setStudent_sno(student_sno);
 		int count = scoreService.updateStudentScore(score);
-		return count == 1? new JsonResult(1,"修改成功") : new JsonResult(0,"修改失败");
+		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
 	}
 	
 	/*
@@ -73,7 +74,7 @@ public class ScoreController {
 	public JsonResult deleteStudent(@PathVariable("student_sno") String student_sno,@RequestBody Score score) {
 		score.setStudent_sno(student_sno);
 		int count = scoreService.deleteStudentScore(score);
-		return count == 1? new JsonResult(1,"删除成功") : new JsonResult(0,"删除失败");
+		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
 	}
 	
 	
@@ -82,9 +83,9 @@ public class ScoreController {
 	 * 查询前/后几名同学
 	 */
 	
-	@GetMapping("/{sequence}/topNumber/{topNumber}")
-	public JsonResult selectStudentTotalScore(@PathVariable("sequence") int sequence,@PathVariable("topNumber") int topNumber) {
-		List<Score> list = scoreService.selectStudentTotalScore(topNumber, sequence);
+	@GetMapping("/{sequence}/topNumber/{number}")
+	public JsonResult selectStudentTotalScore(@PathVariable("sequence") int sequence,@PathVariable("number") int number) {
+		List<Score> list = scoreService.selectStudentTotalScore(number, sequence);
 		return new JsonResult(1,list);
 		
 	}

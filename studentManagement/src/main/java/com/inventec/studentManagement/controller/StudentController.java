@@ -5,9 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import javax.xml.crypto.Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,6 +30,7 @@ import com.inventec.studentManagement.utils.Result;
 
 @RequestMapping("/students")
 @RestController
+@Validated
 public class StudentController {
 
 	
@@ -47,9 +51,10 @@ public class StudentController {
 	 */
 	@GetMapping("{student_sno}")
 	public JsonResult selectStudent(@PathVariable("student_sno") String student_sno) {
+		
 		Student student = studentService.selectStudent(student_sno);
 		
-		return student != null ? new JsonResult(1,student) : new JsonResult(0,"删除失败");
+		return student != null ? new JsonResult(1,student) : new JsonResult(0,"fail");
 	}
 	
 //	@GetMapping("stu")
@@ -82,11 +87,12 @@ public class StudentController {
 	 * 新增一个学生
 	 */
 	@PostMapping
-	public JsonResult addStudent(@RequestBody Student student) {
-		int count = studentService.addStudent(student);
-		return count == 1? new JsonResult(1,"新增成功") : new JsonResult(0,"新增失败");
+	public JsonResult addStudent(@Validated@RequestBody Student student) {
+		
+		
+			int count = studentService.addStudent(student);
+			return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
 	}
-	
 	
 	/*
 	 * 
@@ -95,7 +101,7 @@ public class StudentController {
 	@PatchMapping("{student_sno}")
 	public JsonResult updateStudent(@PathVariable("student_sno") String student_sno,@RequestBody Student student) {
 		int count = studentService.updateStudent(student_sno,student);
-		return count == 1? new JsonResult(1,"修改成功") : new JsonResult(0,"修改失败");
+		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
 	}
 	
 	
@@ -105,7 +111,7 @@ public class StudentController {
 	@DeleteMapping("{student_sno}")
 	public JsonResult deleteStudent(@PathVariable("student_sno") String student_sno) {
  		int count = studentService.deleteStudent(student_sno);
- 		return count == 1? new JsonResult(1,"删除成功") : new JsonResult(0,"删除失败");
+ 		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
 	}
 	
 }

@@ -74,11 +74,15 @@ public class ScoreServiceImp implements ScoreService{
 	
 	
 	
+	/*
+	 * 
+	 * 查询学生总分前10/后10名学生信息和成绩信息
+	 */
 	@Override
-	public List<Score> selectStudentTotalScore(int topNumber, int sort) {
+	public List<Score> selectStudentTotalScore(int number, int sort) {
 		// TODO Auto-generated method stub
 		
-		return scoreDao.selectStudentTotalScore(topNumber, sort);
+		return scoreDao.selectStudentTotalScore(number, sort);
 	}
 
 }

@@ -17,6 +17,6 @@ public interface ScoreDao {
 	int addStudentScore (Score score);
 	int updateStudentScore(Score score);
 	int deleteStudentScore(Score score);
-	List<Score> selectStudentTotalScore(@Param("topNumber") int topNumber,@Param("sort") int sort);
+	List<Score> selectStudentTotalScore(@Param("number") int number,@Param("sort") int sort);
 //	List<Score> studentTotalScoreByStudentSno(List<Score> list);
 }
