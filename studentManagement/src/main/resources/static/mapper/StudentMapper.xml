@@ -4,7 +4,7 @@
 	
 
 	<select id="selectStudents" resultType="student">
-		select * from dbo.STUDENT 
+		select student_sno,student_sname,student_sex,student_age from dbo.STUDENT 
 	</select>
 	
 	

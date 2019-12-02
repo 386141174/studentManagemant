@@ -9,7 +9,7 @@ public class Score {
 	@NotNull(message = "课程号不能为空")
 	private String subject_cno;
 	@NotNull(message = "分数不能为空")
-	private String score;
+	private float score;
 	private double totalScore;
 	
 	public double getTotalScore() {
@@ -34,10 +34,10 @@ public class Score {
 	public void setSubject_cno(String subject_cno) {
 		this.subject_cno = subject_cno;
 	}
-	public String getScore() {
+	public float getScore() {
 		return score;
 	}
-	public void setScore(String score) {
+	public void setScore(Float score) {
 		this.score = score;
 	}
 	@Override

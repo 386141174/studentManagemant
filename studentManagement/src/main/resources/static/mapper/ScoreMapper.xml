@@ -170,5 +170,6 @@
 			S.student_sno = #{student_sno} and C.subject_cno = #{subject_cno}
 	</select>
 	
+	
 
 </mapper>

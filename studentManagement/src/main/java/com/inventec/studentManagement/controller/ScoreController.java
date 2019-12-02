@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inventec.studentManagement.pojo.Score;
@@ -40,11 +41,12 @@ public class ScoreController {
 	/*
 	 * 查询学生单科成绩
 	 */
-	@GetMapping("/{student_sno}/{subject_cno}")
+	@GetMapping("single-subject/{student_sno}/{subject_cno}")
 	public JsonResult select(@PathVariable("student_sno") String student_sno,@PathVariable("subject_cno") String subject_cno) {
 		StudentScore score = scoreService.selectStudentScore(student_sno, subject_cno);
 		return score != null ? new JsonResult(1,score) : new JsonResult(0,"fail");
 	}
+	
 	
 	/*
 	 * 添加学生单科成绩
@@ -83,10 +85,13 @@ public class ScoreController {
 	 * 查询前/后几名同学
 	 */
 	
-	@GetMapping("/{sequence}/topNumber/{number}")
-	public JsonResult selectStudentTotalScore(@PathVariable("sequence") int sequence,@PathVariable("number") int number) {
+	@GetMapping("sequence/{sequence}/top-number/{number}")
+	public JsonResult selectStudentTotalScore(@RequestParam@PathVariable("sequence") int sequence,@RequestParam@PathVariable("number") int number) {
 		List<Score> list = scoreService.selectStudentTotalScore(number, sequence);
 		return new JsonResult(1,list);
 		
 	}
+	
+	
+	
 }

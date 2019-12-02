@@ -4,8 +4,8 @@ public class StudentScore {
 
 	private String subject_cname;
 	private String student_sname;
-	private int student_sex;
-	private int student_age;
+	private Integer student_sex;
+	private Integer student_age;
 	private String student_time;
 	private String student_sno;
 	private String subject_cno;

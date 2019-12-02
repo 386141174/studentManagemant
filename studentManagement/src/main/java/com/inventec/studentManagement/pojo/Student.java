@@ -9,9 +9,9 @@ public class Student {
 	@NotNull(message = "姓名不能为空")
 	private String student_sname;
 	@NotNull(message = "性别不能为空")
-	private int student_sex;
+	private Integer student_sex;
 	@NotNull(message = "年龄不能为空")
-	private int student_age;
+	private Integer student_age;
 	@NotNull(message = "创建时间不能为空")
 	private String student_time;
 	
