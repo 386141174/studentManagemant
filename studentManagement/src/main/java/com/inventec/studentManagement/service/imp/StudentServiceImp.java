@@ -66,11 +66,7 @@ public class StudentServiceImp implements StudentService{
 	@Override
 	public int updateStudent(String student_sno,Student student) {
 		// TODO Auto-generated method stub
-		if (student.getStudent_sno().length() != 0) {
-			System.out.println("1111111");
-			student.setStudent_sno(student_sno);
-		}
-		
+		student.setStudent_sno(student_sno);
 		int count = studentdao.updateStudent(student);
 		return count;
 	}

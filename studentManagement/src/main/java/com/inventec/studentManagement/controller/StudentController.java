@@ -30,7 +30,6 @@ import com.inventec.studentManagement.utils.Result;
 
 @RequestMapping("/students")
 @RestController
-@Validated
 public class StudentController {
 
 	

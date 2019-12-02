@@ -4,7 +4,7 @@
 	
 
 	<select id="selectStudents" resultType="student">
-		select student_sno,student_sname,student_sex,student_age from dbo.STUDENT 
+		select student_sno,student_sname,student_sex,student_age,student_time from dbo.STUDENT 
 	</select>
 	
 	
@@ -21,9 +21,9 @@
 	</insert>
 	
 	<update id="updateStudent" parameterType="Student">
-		update [STUDENT] set
+		update [STUDENT] 
 		
-		<trim suffixOverrides=",">
+		<trim prefix="set" suffixOverrides=",">
 			<if test="student_sname != null and student_sno != ''">
 				student_sname = #{student_sname},
 			</if>
