@@ -1,7 +1,14 @@
 package com.inventec.studentManagement.pojo;
 
-public class Rank {
+import java.io.Serializable;
 
+public class Rank implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7046996755412911142L;
+	private String id;
 	private String YW;
 	private String SX;
 	private String YY;
@@ -86,7 +93,12 @@ public class Rank {
 	public void setScore(Score score) {
 		this.score = score;
 	}
-	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	
 }

@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.inventec.studentManagement.dao.ScoreDao">
 	
+	<cache />
 	<select id="studentScore"  parameterType="StudentScore" resultType="StudentScore">
 		select 
 			S.student_sname,C.score,J.subject_cname,J.subject_cno
@@ -13,16 +14,7 @@
 		on 
 			C.subject_cno = J.subject_cno
 		where
-			
-			<trim suffixOverrides="and"></trim>
-			<if test="student_sno != null and student_sno != ''">
-				 S.student_sno = #{student_sno}
-			</if>
-			
-			<if test="subject_cno != null and subject_cno != ''">
-				and J.subject_cno = #{subject_cno}
-			</if>
-			
+		S.student_sno = #{student_sno}		
 	</select>
 	
 	<!-- <resultMap type="StudentScore" id="StudentScore">
@@ -134,7 +126,7 @@
 	</select>
 	
 	<resultMap type="Rank" id="studentTotalScoreByStudentSno" >
-			
+			<id property="id" column="student_sno"/>
 			<result property="YW" column="YW"/>
 			<result property="SX" column="SX"/>
 			<result property="YY" column="YY"/>
@@ -170,6 +162,27 @@
 			S.student_sno = #{student_sno} and C.subject_cno = #{subject_cno}
 	</select>
 	
+	
+	<select id="testStudentRank" parameterType="int" resultMap="testStudentRankMap">
+		select 
+			top( #{number} )student_sno,SUM(score) score 
+		from 
+			[STUDENTS_SCORE]	
+		group by 
+			student_sno
+		order by
+			SUM(score)
+			desc
+	</select>
+	
+	<resultMap type="rank" id="testStudentRankMap">
+		<association property="student" javaType="student">
+			<id property="student_sno" column="student_sno"/>
+		</association>
+		<association property="score" javaType="score">
+			<result property="totalScore" column="score"/>
+		</association>
+	</resultMap>
 	
 
 </mapper>

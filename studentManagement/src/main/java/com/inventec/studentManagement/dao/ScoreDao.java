@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.inventec.studentManagement.pojo.Rank;
 import com.inventec.studentManagement.pojo.Score;
 import com.inventec.studentManagement.pojo.Student;
 import com.inventec.studentManagement.pojo.StudentScore;
@@ -17,6 +18,7 @@ public interface ScoreDao {
 	int addStudentScore (Score score);
 	int updateStudentScore(Score score);
 	int deleteStudentScore(Score score);
-	List<Score> selectStudentTotalScore(@Param("number") int number,@Param("sort") int sort);
+	List<Rank> selectStudentTotalScore(@Param("number") int number,@Param("sort") int sort);
 //	List<Score> studentTotalScoreByStudentSno(List<Score> list);
+	List<Rank> testStudentRank(@Param("number") int number);
 }

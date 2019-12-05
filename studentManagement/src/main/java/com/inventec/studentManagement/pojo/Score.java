@@ -1,14 +1,23 @@
 package com.inventec.studentManagement.pojo;
 
+import java.io.Serializable;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class Score {
+public class Score implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8512221290396042214L;
 	private String student_sno;
 	@NotNull(message = "课程号不能为空")
+	@NotBlank
 	private String subject_cno;
 	@NotNull(message = "分数不能为空")
+	@NotBlank
 	private float score;
 	private double totalScore;
 	

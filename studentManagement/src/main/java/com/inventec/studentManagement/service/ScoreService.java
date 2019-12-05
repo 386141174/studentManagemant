@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.inventec.studentManagement.pojo.Rank;
 import com.inventec.studentManagement.pojo.Score;
 import com.inventec.studentManagement.pojo.Student;
 import com.inventec.studentManagement.pojo.StudentScore;
@@ -17,5 +18,6 @@ public interface ScoreService {
 	int addStudentScore(Score score);
 	int updateStudentScore(Score score);
 	int deleteStudentScore(Score score);
-	List<Score> selectStudentTotalScore(int number,int sort);
+	List<Rank> selectStudentTotalScore(int number,int sort);
+	List<Rank> testStudentRank(int number);
 }

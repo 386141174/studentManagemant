@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inventec.studentManagement.dao.ScoreDao;
+import com.inventec.studentManagement.pojo.Rank;
 import com.inventec.studentManagement.pojo.Score;
 import com.inventec.studentManagement.pojo.Student;
 import com.inventec.studentManagement.pojo.StudentScore;
@@ -79,10 +80,17 @@ public class ScoreServiceImp implements ScoreService{
 	 * 查询学生总分前10/后10名学生信息和成绩信息
 	 */
 	@Override
-	public List<Score> selectStudentTotalScore(int number, int sort) {
+	public List<Rank> selectStudentTotalScore(int number, int sort) {
 		// TODO Auto-generated method stub
 		
 		return scoreDao.selectStudentTotalScore(number, sort);
+	}
+	
+	
+	@Override
+	public List<Rank> testStudentRank(int number) {
+		// TODO Auto-generated method stub
+		return scoreDao.testStudentRank(number);
 	}
 
 }

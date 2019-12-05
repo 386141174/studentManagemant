@@ -1,7 +1,13 @@
 package com.inventec.studentManagement.pojo;
 
-public class Subject {
+import java.io.Serializable;
 
+public class Subject implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3846144756866379770L;
 	private String subject_cno;
 	private String subject_cname;
 	public String getSubject_cno() {

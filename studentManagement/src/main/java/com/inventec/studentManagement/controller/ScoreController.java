@@ -2,6 +2,8 @@ package com.inventec.studentManagement.controller;
 
 import java.util.List;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.inventec.studentManagement.pojo.Rank;
 import com.inventec.studentManagement.pojo.Score;
 import com.inventec.studentManagement.pojo.StudentScore;
 import com.inventec.studentManagement.service.ScoreService;
@@ -63,7 +66,7 @@ public class ScoreController {
 	 * 修改学生单科成绩
 	 */
 	@PatchMapping("/{student_sno}")
-	public JsonResult uodateStudentScore(@PathVariable("student_sno") String student_sno,@RequestBody Score score) {
+	public JsonResult uodateStudentScore(@PathVariable("student_sno") String student_sno,@Validated@RequestBody Score score) {
 		score.setStudent_sno(student_sno);
 		int count = scoreService.updateStudentScore(score);
 		return count == 1? new JsonResult(1,"success") : new JsonResult(0,"fail");
@@ -86,12 +89,15 @@ public class ScoreController {
 	 */
 	
 	@GetMapping("sequence/{sequence}/top-number/{number}")
-	public JsonResult selectStudentTotalScore(@RequestParam@PathVariable("sequence") int sequence,@RequestParam@PathVariable("number") int number) {
-		List<Score> list = scoreService.selectStudentTotalScore(number, sequence);
+	public JsonResult selectStudentTotalScore(@PathVariable("sequence") int sequence,@PathVariable("number") int number) {
+		List<Rank> list = scoreService.selectStudentTotalScore(number, sequence);
 		return new JsonResult(1,list);
 		
 	}
 	
-	
+	@GetMapping("test/{number}")
+	public JsonResult testStudentRank(@PathVariable("number") int number) {
+		return new JsonResult(1,scoreService.testStudentRank(number));
+	}
 	
 }

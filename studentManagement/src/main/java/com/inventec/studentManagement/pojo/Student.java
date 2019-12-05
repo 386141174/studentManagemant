@@ -1,10 +1,17 @@
 package com.inventec.studentManagement.pojo;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class Student {
+public class Student implements Serializable{
 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7841629023468785872L;
 	@NotNull(message = "学号不能为空")
 	@NotBlank
 	private String student_sno;
@@ -65,7 +72,7 @@ public class Student {
 
 
 
-	public int getStudent_sex() {
+	public Integer getStudent_sex() {
 		return student_sex;
 	}
 
@@ -75,7 +82,7 @@ public class Student {
 
 
 
-	public void setStudent_sex(int student_sex) {
+	public void setStudent_sex(Integer student_sex) {
 		this.student_sex = student_sex;
 	}
 
@@ -85,7 +92,7 @@ public class Student {
 
 
 
-	public int getStudent_age() {
+	public Integer getStudent_age() {
 		return student_age;
 	}
 
@@ -95,7 +102,7 @@ public class Student {
 
 
 
-	public void setStudent_age(int student_age) {
+	public void setStudent_age(Integer student_age) {
 		this.student_age = student_age;
 	}
 

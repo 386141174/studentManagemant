@@ -1,7 +1,13 @@
 package com.inventec.studentManagement.pojo;
 
-public class StudentScore {
+import java.io.Serializable;
 
+public class StudentScore implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2948187549987332542L;
 	private String subject_cname;
 	private String student_sname;
 	private Integer student_sex;
@@ -51,25 +57,25 @@ public class StudentScore {
 
 
 
-	public int getStudent_sex() {
+	public Integer getStudent_sex() {
 		return student_sex;
 	}
 
 
 
-	public void setStudent_sex(int student_sex) {
+	public void setStudent_sex(Integer student_sex) {
 		this.student_sex = student_sex;
 	}
 
 
 
-	public int getStudent_age() {
+	public Integer getStudent_age() {
 		return student_age;
 	}
 
 
 
-	public void setStudent_age(int student_age) {
+	public void setStudent_age(Integer student_age) {
 		this.student_age = student_age;
 	}
 
