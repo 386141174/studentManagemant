@@ -90,14 +90,9 @@
 	
 	
 	<select id="selectStudentTotalScore" parameterType="int" resultMap="studentTotalScoreByStudentSno">
-		select 
+		<!-- select 
 			distinct 
-				top(
-					<if test="number != null and number != ''">
-						#{number}
-					</if>	
-					
-					)
+				top(#{number})
 				T.student_sno,S.student_sname,T.YW,T.SX,T.YY,T.WL,T.HX,T.SW,T.LS,T.DL,T.ZZ,T.XX,C.zong score 
 		from 
 			(
@@ -120,9 +115,30 @@
 			S.student_sno = C.student_sno
 		order by 
 			C.zong 
-			<if test="	sort != null and sort == 1">
+			<if test="sort == 1">
 				desc
-			</if> 
+			</if>  -->
+			
+			
+			select 
+				A.student_sno,S.student_sname,t.YW,t.SX,t.YY,t.HX,t.WL,t.SW,t.LS,t.DL,t.ZZ,t.XX,A.total_score 
+			from 
+				[STUDENTS_SCORE] 
+				pivot ( sum(score) for subject_cno in (DL,HX,LS,SW,SX,WL,XX,YW,YY,ZZ) ) as t 
+			right join 	
+				(select top(#{number})* from [Middle_Table] order by total_score desc) as A 
+			on 
+				t.student_sno = A.student_sno 
+			left join 
+				[STUDENT] S 
+			on 
+				S.student_sno = A.student_sno 
+			order by 
+				A.total_score 
+				<if test="sort == 1">
+					desc
+				</if>  
+			
 	</select>
 	
 	<resultMap type="Rank" id="studentTotalScoreByStudentSno" >
@@ -142,12 +158,12 @@
 			<result property="student_sno" column="student_sno"/>
 		</association>
 		<association property="score" javaType="score">
-			<result property="totalScore" column="score"/>
+			<result property="totalScore" column="total_score"/>
 		</association>
 		
 	</resultMap>
 	
-	<select id="selectStudentScore" parameterType="String" resultType="StudentScore">
+<!-- 	<select id="selectStudentScore" parameterType="String" resultType="StudentScore">
 		select 
 			S.student_sno,S.student_sname,C.subject_cno,J.subject_cname
 		from 
@@ -183,6 +199,52 @@
 			<result property="totalScore" column="score"/>
 		</association>
 	</resultMap>
+	
+	<select id="testStudentScore" resultMap="test" parameterType="list">
+		select 
+			S.student_sname,C.subject_cno,C.score
+		from 
+			[STUDENT] S left join [STUDENTS_SCORE] C
+		on
+			S.student_sno = C.student_sno
+		where 
+			S.student_sno in
+			<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+				#{item.student.student_sno}
+			</foreach>
+	</select>
+	
+	<resultMap type="rank" id="test">
+		<association property="student" javaType="student">
+			<id property="student_sname" column="student_sname"/>
+			<id property="student_sno" column="student_sno"/>
+		</association>
+		<association property="score" javaType="score">
+			<id property="subject_cno" column="subject_cno"/>
+			<result property="score" column="score"/>
+		</association>
+	
+	</resultMap> -->
+	
+	
+	
+	
+	
+	<update id="updateMiddleTable" parameterType="String">
+		update 
+			[Middle_Table] 
+		set 
+			total_score = (select 
+								SUM(score) 
+							from 
+								[STUDENTS_SCORE] 
+							where 
+								student_sno = #{student_sno}) 
+		where 
+			student_sno = #{student_sno}
+		
+	</update>
+	
 	
 
 </mapper>

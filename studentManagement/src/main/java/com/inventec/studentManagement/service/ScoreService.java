@@ -19,5 +19,5 @@ public interface ScoreService {
 	int updateStudentScore(Score score);
 	int deleteStudentScore(Score score);
 	List<Rank> selectStudentTotalScore(int number,int sort);
-	List<Rank> testStudentRank(int number);
+//	List<Rank> testStudentRank(int number);
 }

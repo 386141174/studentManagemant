@@ -20,5 +20,8 @@ public interface ScoreDao {
 	int deleteStudentScore(Score score);
 	List<Rank> selectStudentTotalScore(@Param("number") int number,@Param("sort") int sort);
 //	List<Score> studentTotalScoreByStudentSno(List<Score> list);
-	List<Rank> testStudentRank(@Param("number") int number);
+//	List<Rank> testStudentRank(@Param("number") int number);
+//	List<Rank> testStudentScore(List<Rank> list);
+	
+	int updateMiddleTable(@Param("student_sno") String student_sno);
 }

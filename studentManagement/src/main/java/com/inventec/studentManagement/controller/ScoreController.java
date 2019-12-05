@@ -95,9 +95,6 @@ public class ScoreController {
 		
 	}
 	
-	@GetMapping("test/{number}")
-	public JsonResult testStudentRank(@PathVariable("number") int number) {
-		return new JsonResult(1,scoreService.testStudentRank(number));
-	}
+	
 	
 }

@@ -17,7 +17,6 @@ public class Score implements Serializable{
 	@NotBlank
 	private String subject_cno;
 	@NotNull(message = "分数不能为空")
-	@NotBlank
 	private float score;
 	private double totalScore;
 	

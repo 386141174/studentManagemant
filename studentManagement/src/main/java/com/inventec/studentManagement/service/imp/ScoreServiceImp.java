@@ -48,8 +48,10 @@ public class ScoreServiceImp implements ScoreService{
 	@Override
 	public int addStudentScore(Score score) {
 		// TODO Auto-generated method stub
-		
-		return scoreDao.addStudentScore(score);
+		if(scoreDao.addStudentScore(score) == 1) {
+			return scoreDao.updateMiddleTable(score.getStudent_sno());
+		}
+		return 0;
 	}
 	
 	
@@ -59,8 +61,10 @@ public class ScoreServiceImp implements ScoreService{
 	@Override
 	public int updateStudentScore(Score score) {
 		// TODO Auto-generated method stub
-		
-		return scoreDao.updateStudentScore(score);
+		if(scoreDao.updateStudentScore(score) == 1) {
+			return scoreDao.updateMiddleTable(score.getStudent_sno());
+		}
+		return 0;
 	}
 	
 	/*
@@ -69,8 +73,10 @@ public class ScoreServiceImp implements ScoreService{
 	@Override
 	public int deleteStudentScore(Score score) {
 		// TODO Auto-generated method stub
-		
-		return scoreDao.deleteStudentScore(score);
+		if(scoreDao.deleteStudentScore(score) == 1) {
+			return scoreDao.updateMiddleTable(score.getStudent_sno());
+		}
+		return 0;
 	}
 	
 	
@@ -87,10 +93,16 @@ public class ScoreServiceImp implements ScoreService{
 	}
 	
 	
-	@Override
-	public List<Rank> testStudentRank(int number) {
-		// TODO Auto-generated method stub
-		return scoreDao.testStudentRank(number);
-	}
+//	@Override
+//	public List<Rank> testStudentRank(int number) {
+//		// TODO Auto-generated method stub
+//		
+//		List<Rank> list = scoreDao.testStudentRank(number);
+//		list = scoreDao.testStudentScore(list);
+//		return list;
+//	}
 
+	
+	
+	
 }
