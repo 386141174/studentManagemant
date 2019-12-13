@@ -4,13 +4,37 @@ spring:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     username: sa
     password: itcqms
+#    druid:
+#      initial-size: 5
+    hikari:
+      auto-commit: true
+      maximum-pool-size: 60
+      minimum-idle: 10
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      idle-timeout: 600000
+      maxLifetime: 1800000
+      read-only: false
+     
+  mvc:
+    servlet:
+      load-on-startup: 1
+      
+  rabbitmq:
+    host: 10.190.254.240
+    port: 5672
+    username: test
+    password: test
+    virtual-host: stu_mgt
+    
+    
     
     
 mybatis:
-  type-aliases-package: com.inventec.studentManagement.Pojo
+  type-aliases-package: com.inventec.studentManagement.pojo
   mapper-locations: classpath:static/mapper/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     
-
-
+    
+debug: true

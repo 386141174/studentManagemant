@@ -24,4 +24,6 @@ public interface ScoreDao {
 //	List<Rank> testStudentScore(List<Rank> list);
 	
 	int updateMiddleTable(@Param("student_sno") String student_sno);
+	int insertMiddleTable(@Param("student_sno") String student_sno);
+	int selectMiddleTable(@Param("student_sno") String student_sno);
 }

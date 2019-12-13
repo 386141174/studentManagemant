@@ -17,7 +17,7 @@
 	</select>
 
 	<insert id="addStudent" parameterType="Student">
-		insert into [STUDENT] values(#{student_sno},#{student_sname},#{student_sex},#{student_age},#{student_time})
+		insert into   [STUDENT] values(#{student_sno},#{student_sname},#{student_sex},#{student_age},#{student_time})
 	</insert>
 	
 	<update id="updateStudent" parameterType="Student">

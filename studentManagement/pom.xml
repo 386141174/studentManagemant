@@ -40,6 +40,20 @@
 			<version>2.1.1</version>
 		</dependency>
 		<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    	</dependency>
+    	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+		<dependency>
+		
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.9</version>
+		</dependency>
+		<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.41</version>
@@ -53,11 +67,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			
 		</dependency>
-		
-	
-
 	</dependencies>
 
 	<build>

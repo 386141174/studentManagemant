@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.inventec.studentManagement.utils.BizException;
-import com.inventec.studentManagement.utils.CommonEnum;
-import com.inventec.studentManagement.utils.JsonResult;
-import com.inventec.studentManagement.utils.ResultBody;
 
 @RestControllerAdvice
 public class GlobalDefultExceptionHandler {

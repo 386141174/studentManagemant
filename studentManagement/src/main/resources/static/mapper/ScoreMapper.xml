@@ -126,7 +126,12 @@
 				[STUDENTS_SCORE] 
 				pivot ( sum(score) for subject_cno in (DL,HX,LS,SW,SX,WL,XX,YW,YY,ZZ) ) as t 
 			right join 	
-				(select top(#{number})* from [Middle_Table] order by total_score desc) as A 
+				(select top(#{number})* from [Middle_Table] order by total_score 
+					<if test="sort == 1">
+						desc
+					</if>
+					
+				) as A 
 			on 
 				t.student_sno = A.student_sno 
 			left join 
@@ -135,9 +140,7 @@
 				S.student_sno = A.student_sno 
 			order by 
 				A.total_score 
-				<if test="sort == 1">
-					desc
-				</if>  
+				
 			
 	</select>
 	
@@ -163,7 +166,7 @@
 		
 	</resultMap>
 	
-<!-- 	<select id="selectStudentScore" parameterType="String" resultType="StudentScore">
+	<select id="selectStudentScore" parameterType="String" resultType="StudentScore">
 		select 
 			S.student_sno,S.student_sname,C.subject_cno,J.subject_cname
 		from 
@@ -179,7 +182,7 @@
 	</select>
 	
 	
-	<select id="testStudentRank" parameterType="int" resultMap="testStudentRankMap">
+<!-- 	<select id="testStudentRank" parameterType="int" resultMap="testStudentRankMap">
 		select 
 			top( #{number} )student_sno,SUM(score) score 
 		from 
@@ -198,9 +201,9 @@
 		<association property="score" javaType="score">
 			<result property="totalScore" column="score"/>
 		</association>
-	</resultMap>
+	</resultMap> -->
 	
-	<select id="testStudentScore" resultMap="test" parameterType="list">
+	<!-- <select id="testStudentScore" resultMap="test" parameterType="list">
 		select 
 			S.student_sname,C.subject_cno,C.score
 		from 
@@ -244,6 +247,17 @@
 			student_sno = #{student_sno}
 		
 	</update>
+	
+	<insert id="insertMiddleTable" parameterType="String">
+		insert into 
+			[Middle_Table]
+		values
+			(#{student_sno},(select SUM(score) from [STUDENTS_SCORE] where student_sno = #{student_sno}))
+	</insert>
+	
+	<select id="selectMiddleTable" parameterType="String" resultType="int">
+		select count(1) from [Middle_Table] where student_sno = #{student_sno}
+	</select>
 	
 	
 
