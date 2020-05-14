@@ -12,7 +12,6 @@
 		select * from dbo.STUDENT 
 		<where>
 			<if test="student_sno != null and student_sno != '' " > student_sno = #{student_sno}</if>
-			<if test="student_sname != null and student_sname != '' "> student_sname = #{student_sname} </if>
 		</where>
 	</select>
 

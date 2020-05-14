@@ -13,10 +13,7 @@ import com.inventec.studentManagement.pojo.Student;
 import com.inventec.studentManagement.service.StudentService;
 import com.inventec.studentManagement.vo.Routing;
 
-/**
- * @author ITC190109
- *
- */
+
 /**
  * @author ITC190109
  *
@@ -54,18 +51,7 @@ public class StudentServiceImp implements StudentService{
 		student.setStudent_sno(student_sno);
 		return studentdao.selectStudent(student);
 	}
-	
-//	@Transactional
-//	@Override
-//	public int addStudent(Student student) {
-//		// TODO Auto-generated method stub
-//		
-//		int count = studentdao.addStudent(student);
-//		int a = 10 / 0;
-//		return count;
-//	}
-	
-//	@Transactional(rollbackFor = Exception.class)
+
 	
 	/*
 	 * 新增学生信息
@@ -86,7 +72,7 @@ public class StudentServiceImp implements StudentService{
 		// TODO Auto-generated method stub
 		student.setStudent_sno(student_sno);
 		if (student.getStudent_sex() != null) {
-			if (student.getStudent_sex() != 1 || student.getStudent_sex() != 2) {
+			if (student.getStudent_sex() != 1 && student.getStudent_sex() != 2) {
 				throw new Exception("1代表男,2代表女");
 			}
 		}
@@ -114,7 +100,7 @@ public class StudentServiceImp implements StudentService{
 		// TODO Auto-generated method stub
 		int count = studentdao.addStudent(student);
 		if (count == 1) {
-			amqp.convertAndSend(routing.exchange, routing.routing_key_student_info, JSON.toJSON(student));
+			amqp.convertAndSend(routing.scoreExchange, routing.student_info, JSON.toJSON(student));
 			return count;
 		}
 		return count;
@@ -129,18 +115,16 @@ public class StudentServiceImp implements StudentService{
 		// TODO Auto-generated method stub
 		student.setStudent_sno(student_sno);
 		if (student.getStudent_sex() != null) {
-			if (student.getStudent_sex() != 1 || student.getStudent_sex() != 2) {
+			if (student.getStudent_sex() != 1 && student.getStudent_sex() != 2) {
 				throw new Exception("1代表男,2代表女");
 			}
 		}
 		int count = studentdao.updateStudent(student);
-		if (count == 1) {
-			amqp.convertAndSend(routing.exchange, routing.routing_key_student_info, JSON.toJSON(student));
+		if (count != 0) {
+			amqp.convertAndSend(routing.scoreExchange, routing.student_info, JSON.toJSON(student));
 			return count;
 		}
-		
 		return 0;
-		
 	}
 	
 	

@@ -15,7 +15,7 @@ public class StudentScore implements Serializable{
 	private String student_time;
 	private String student_sno;
 	private String subject_cno;
-	private String score;
+	private double score;
 	private double totalScore;
 	
 	
@@ -117,14 +117,24 @@ public class StudentScore implements Serializable{
 
 
 
-	public String getScore() {
+	public double getScore() {
 		return score;
 	}
 
 
 
-	public void setScore(String score) {
+	public void setScore(double score) {
 		this.score = score;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "StudentScore [subject_cname=" + subject_cname + ", student_sname=" + student_sname + ", student_sex="
+				+ student_sex + ", student_age=" + student_age + ", student_time=" + student_time + ", student_sno="
+				+ student_sno + ", subject_cno=" + subject_cno + ", score=" + score + ", totalScore=" + totalScore
+				+ "]";
 	}
 
 

@@ -3,6 +3,7 @@ package com.inventec.studentManagement.controller;
 
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,9 +59,10 @@ public class GlobalDefultExceptionHandler {
 		@ResponseBody
 	    @ExceptionHandler(value = Exception.class)
 	    public Map errorHandler(Exception ex) {
-	        Map map = new HashMap();
-	        map.put("state", 40001);
+	        Map map = new LinkedHashMap<String, String>();
+	        map.put("code", 1);
 	        map.put("msg", ex.getMessage());
+	        map.put("data", "");
 	        return map;
 	    }
 	 	

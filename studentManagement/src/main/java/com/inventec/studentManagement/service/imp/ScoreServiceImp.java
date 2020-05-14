@@ -3,6 +3,8 @@ package com.inventec.studentManagement.service.imp;
 import java.util.List;
 
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.MessagePostProcessor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,15 +61,11 @@ public class ScoreServiceImp implements ScoreService {
 	@Override
 	public int addStudentScore(Score score) {
 		// TODO Auto-generated method stub
-
-		if (scoreDao.addStudentScore(score) == 1) {
-			if (scoreDao.selectMiddleTable(score.getStudent_sno()) == 1) {
-				return scoreDao.updateMiddleTable(score.getStudent_sno());
-			} else {
-				return scoreDao.insertMiddleTable(score.getStudent_sno());
-			}
+		int count = scoreDao.addStudentScore(score);
+		if (count != 0) {
+			amp.convertAndSend(routing.scoreExchange, routing.routing_insert_table, JSON.toJSON(score));
 		}
-		return 0;
+		return count;
 	}
 
 	/*
@@ -76,10 +74,11 @@ public class ScoreServiceImp implements ScoreService {
 	@Override
 	public int updateStudentScore(Score score) {
 		// TODO Auto-generated method stub
-		if (scoreDao.updateStudentScore(score) == 1) {
-			return scoreDao.updateMiddleTable(score.getStudent_sno());
+		int count = scoreDao.updateStudentScore(score);
+		if (count != 0) {
+			amp.convertAndSend(routing.scoreExchange, routing.routing_update_table, JSON.toJSON(score));
 		}
-		return 0;
+		return count;
 	}
 
 	/*
@@ -88,10 +87,11 @@ public class ScoreServiceImp implements ScoreService {
 	@Override
 	public int deleteStudentScore(Score score) {
 		// TODO Auto-generated method stub
-		if (scoreDao.deleteStudentScore(score) == 1) {
-			return scoreDao.updateMiddleTable(score.getStudent_sno());
+		int count = scoreDao.deleteStudentScore(score);
+		if (count != 0) {
+			amp.convertAndSend(routing.scoreExchange, routing.routing_update_table, JSON.toJSON(score));
 		}
-		return 0;
+		return count;
 	}
 
 	/*
@@ -101,25 +101,25 @@ public class ScoreServiceImp implements ScoreService {
 	@Override
 	public List<Rank> selectStudentTotalScore(int number, int sort) {
 		// TODO Auto-generated method stub
-
 		return scoreDao.selectStudentTotalScore(number, sort);
 	}
 
+	
+		
 	/**
 	 *增加学生成绩V2
 	 */
 	@Override
 	public int addStudentScoreV2(Score score) {
 		// TODO Auto-generated method stub
-		if (scoreDao.addStudentScore(score) == 1) {
-			amp.convertAndSend(routing.exchange, routing.routing_key_student_score, JSON.toJSON(score));
-			if (scoreDao.selectMiddleTable(score.getStudent_sno()) == 1) {
-				return scoreDao.updateMiddleTable(score.getStudent_sno());
-			} else {
-				return scoreDao.insertMiddleTable(score.getStudent_sno());
-			}
+		int count = scoreDao.addStudentScore(score);
+		if (count == 1) {
+			//放入队列去更新Middle_Table
+			amp.convertAndSend(routing.middleExchang, routing.routing_insert_table, JSON.toJSON(score));
+			//放入队列去查询男/女
+			amp.convertAndSend(routing.scoreExchange, routing.routing_score_table, JSON.toJSON(score));
 		}
-		return 0;
+		return count;
 	}
 
 	
@@ -129,10 +129,16 @@ public class ScoreServiceImp implements ScoreService {
 	@Override
 	public int updateStudentScoreV2(Score score) {
 		// TODO Auto-generated method stub
-		if (scoreDao.updateStudentScore(score) == 1) {
-			amp.convertAndSend(routing.exchange, routing.routing_key_student_score, JSON.toJSON(score));
-			return scoreDao.updateMiddleTable(score.getStudent_sno());
+		int count = scoreDao.updateStudentScore(score);
+		if (count != 0) {
+			//放入队列去查询男/女
+			amp.convertAndSend(routing.middleExchang, routing.routing_score_table, JSON.toJSON(score));
+			//放入队列去更新Middle_Table
+			amp.convertAndSend(routing.scoreExchange, routing.routing_update_table, JSON.toJSON(score));
 		}
-		return 0;
+		return count;
 	}
+	
+	
+
 }
